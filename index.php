@@ -79,19 +79,34 @@ if ($query)
 ?> 
 <html> 
 <head> 
-  <title>Solr Search Plus</title> 
+  <title>Solr Search PHP+</title> 
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <link href="https://fonts.googleapis.com/css?family=Roboto|Capriola" rel="stylesheet">
 
+  <link rel="icon" href="favicon.ico" type="image/ico">
+
   <style>
     body {
-      font-family: "Roboto";
+      font-family: "Roboto", sans-serif;
+      line-height: 1.5rem;
     }
 
     .logo {
-      font-family: "Capriola";
+      font-family: "Product Sans", "Capriola", sans-serif;
+    }
+
+    strong {
+      /* text-transform: uppercase; */
+      font-family: monospace;
+      vertical-align: middle;
+      opacity: 0.7;
+      margin-right: 12px;
+    }
+
+    .result {
+      margin-top: 2.25rem;
     }
   </style>
 </head> 
@@ -100,12 +115,12 @@ if ($query)
   <div class="container">
 
     <div class="text-center mt-5 mb-3">
-      <h1 class="logo">
+      <h1 class="logo display-4">
         <span class="text-primary">S</span><span class="text-danger">e</span><span class="text-warning">a</span><span class="text-primary">r</span><span class="text-success">c</span><span class="text-danger">h</span>
       </h1>
     </div>
 
-    <div class="row">
+    <div class="row mt-4">
       <div class="col">
         <form  accept-charset="utf-8" method="get"> 
           <div class="form-group form-row">
@@ -152,7 +167,7 @@ if ($query)
   ?> 
         <li> 
 
-        <div class="result mt-4 table-responsive">
+        <div class="result table-responsive">
 
         <?php
           if($doc->og_url) {
@@ -165,21 +180,22 @@ if ($query)
         
           
           <h6 class="text-primary mb-0">
-            <strong>Title: </strong><a href="<?php echo $url ?>"><?php echo $doc->title ?></a>
+            <?php if(is_array($doc->title)) { $doc->title = $doc->title[0]; } ?>
+            <strong>Title</strong><a href="<?php echo $url ?>"><?php echo($doc->title) ?></a>
           </h6>
           
           <p class="text-success mb-0">
-            <strong>URL:</strong>
+            <strong>URL</strong>
             <a href="<?php echo $url ?>" class="text-success"><?php echo $url ?></a>
           </p>          
 
           <small class="text-secondary mb-0">
-            <strong>ID: </strong><?php echo $doc->id ?> 
+            <strong>ID</strong><?php echo $doc->id ?> 
           </small>
 
           <?php if($doc->og_description) { ?> 
           <p class="text mb-0">
-            <strong>Description: </strong><?php echo $doc->og_description ?>          
+            <strong>Snippet</strong><?php echo $doc->og_description ?>          
           </p>
           <?php } ?> 
         </div>
