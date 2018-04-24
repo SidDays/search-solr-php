@@ -79,16 +79,28 @@ if ($query)
 ?> 
 <html> 
 <head> 
-  <title>IR HW4</title> 
+  <title>Solr Search Plus</title> 
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto|Capriola" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: "Roboto";
+    }
+
+    .logo {
+      font-family: "Capriola";
+    }
+  </style>
 </head> 
 <body> 
 
   <div class="container">
 
     <div class="text-center mt-5 mb-3">
-      <h1>
+      <h1 class="logo">
         <span class="text-primary">S</span><span class="text-danger">e</span><span class="text-warning">a</span><span class="text-primary">r</span><span class="text-success">c</span><span class="text-danger">h</span>
       </h1>
     </div>
