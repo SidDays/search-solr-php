@@ -1,7 +1,5 @@
 <?php 
 
- 
-
 // make sure browsers see this page as utf-8 encoded HTML 
 header('Content-Type: text/html; charset=utf-8');  
 
@@ -81,34 +79,23 @@ if ($query)
 <head> 
   <title>Solr Search PHP+</title> 
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-  <link href="https://fonts.googleapis.com/css?family=Roboto|Capriola" rel="stylesheet">
-
+  <!-- Favicon -->
   <link rel="icon" href="favicon.ico" type="image/ico">
 
-  <style>
-    body {
-      font-family: "Roboto", sans-serif;
-      line-height: 1.5rem;
-    }
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="lib/bootstrap.min.css">
 
-    .logo {
-      font-family: "Product Sans", "Capriola", sans-serif;
-    }
+  <!-- jQuery -->
+  <script src="lib/jquery-3.3.1.min.js"></script>
 
-    strong {
-      /* text-transform: uppercase; */
-      font-family: monospace;
-      vertical-align: middle;
-      opacity: 0.7;
-      margin-right: 12px;
-    }
+  <!-- devBridge jQuery-Autocomplete -->
+  <script src="lib/jquery.auto-complete.min.js"></script>
+  <link rel="stylesheet" href="lib/jquery.auto-complete.css">
 
-    .result {
-      margin-top: 2.25rem;
-    }
-  </style>
+  <!-- Additional styles -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto|Capriola" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+
 </head> 
 <body> 
 
@@ -122,11 +109,11 @@ if ($query)
 
     <div class="row mt-4">
       <div class="col">
-        <form  accept-charset="utf-8" method="get"> 
+        <form class="searchform" accept-charset="utf-8" method="get"> 
           <div class="form-group form-row">
             <!-- <label for="q">Search:</label>  -->
             <div class="col-9">
-            <input class="form-control mb-3" id="q" name="q" type="text" placeholder="Enter search term here" value="<?php echo htmlspecialchars($query, ENT_QUOTES, 'utf-8'); ?>"/> 
+            <input id="autocomplete" class="form-control mb-3" id="q" name="q" type="text" placeholder="Enter search term here" value="<?php echo htmlspecialchars($query, ENT_QUOTES, 'utf-8'); ?>"/> 
             </div>
 
             <div class="col-2">
@@ -213,5 +200,8 @@ if ($query)
       </div><!-- col -->
     </div><!-- row -->
   </div><!-- container -->
+
+  <!-- Custom scripts -->
+  <script src="js/script.js"></script>
 </body> 
 </html> 
