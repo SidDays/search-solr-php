@@ -7,16 +7,15 @@ body {
   font-family: "Product Sans", "Capriola", sans-serif;
 }
 
-strong {
+.result {
+  margin-top: 2.25rem;
+}
+.result strong {
   /* text-transform: uppercase; */
   font-family: monospace;
   vertical-align: middle;
   opacity: 0.7;
   margin-right: 12px;
-}
-
-.result {
-  margin-top: 2.25rem;
 }
 
 #autocomplete {

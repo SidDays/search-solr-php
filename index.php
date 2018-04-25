@@ -89,7 +89,7 @@ if ($query)
   <script src="lib/jquery-3.3.1.min.js"></script>
 
   <!-- devBridge jQuery-Autocomplete -->
-  <script src="lib/jquery.autocomplete.min.js"></script>
+  <script src="lib/jquery.autocomplete.js"></script>
   <link rel="stylesheet" href="lib/jquery.autocomplete.css">
 
   <!-- Additional styles -->

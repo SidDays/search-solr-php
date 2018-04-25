@@ -10,9 +10,9 @@ include "SpellCorrector.php";
 
 $preparedResponse = array();
 
-if (isset($_REQUEST['q'])) {
+if (isset($_REQUEST["query"])) {
 
-  $query = $_REQUEST['q'];
+  $query = $_REQUEST["query"];
   
   // optional query parameter
   $preparedResponse["query"] = $query;
@@ -54,7 +54,19 @@ if (isset($_REQUEST['q'])) {
   $suggestions = [];  
 
   // Add autocomplete suggestions: alternate method, interleave best suggestions
-  if($n > 3 || $n <= 1) {
+  if($n == 3 && $limit >= 2) {
+    $suggestions[] = $quintuples[0][0]." ".$quintuples[1][0]." ".$quintuples[2][0];
+    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][0]." ".$quintuples[2][0];
+    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][1]." ".$quintuples[2][0];
+    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][0]." ".$quintuples[2][1];
+  } 
+  else if ($n == 2 && $limit >= 2) {
+    $suggestions[] = $quintuples[0][0]." ".$quintuples[1][0];
+    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][0];
+    $suggestions[] = $quintuples[0][0]." ".$quintuples[1][1];
+    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][1];
+    $suggestions[] = $quintuples[0][2]." ".$quintuples[1][0];
+  } else {
     
     // Combine i'th suggestion for each keyword
     for($i = 0; $i < $limit; $i++) {
@@ -67,23 +79,9 @@ if (isset($_REQUEST['q'])) {
           $suggestion = $suggestion." ";
         }
       }
-      // echo($suggestion . "<br>");
 
       $suggestions[] = $suggestion;
     }
-  } else if($n == 3) {
-    $suggestions[] = $quintuples[0][0]." ".$quintuples[1][0]." ".$quintuples[2][0];
-    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][0]." ".$quintuples[2][0];
-    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][1]." ".$quintuples[2][0];
-    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][0]." ".$quintuples[2][1];
-    $suggestions[] = $quintuples[0][2]." ".$quintuples[1][1]." ".$quintuples[2][1];
-  } 
-  else if ($n == 2) {
-    $suggestions[] = $quintuples[0][0]." ".$quintuples[1][0];
-    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][0];
-    $suggestions[] = $quintuples[0][0]." ".$quintuples[1][1];
-    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][1];
-    $suggestions[] = $quintuples[0][2]." ".$quintuples[1][0];
   }
 
   // Add output of spelling checker
@@ -96,18 +94,23 @@ if (isset($_REQUEST['q'])) {
     }
   }
 
-  // Check if the first suggestion is already the same
-  if($suggestions[0] != $spellsuggestion) {
-    array_unshift($suggestions, $spellsuggestion);
+  array_unshift($suggestions, $spellsuggestion);
+  
+  // Find spelling suggestion in the rest of the suggestions and delete it
+  for($i = 1; $i < count($suggestions); $i++) {
+    if($suggestions[$i] == $spellsuggestion) {
+      array_splice($suggestions, $i, 1);
+      break;
+    }
   }
 
-  // var_dump($suggestions);
+  // var_dump($suggestions); echo "<br><br>";
   // var_dump($preparedResponse);
 
   $preparedResponse["suggestions"] = $suggestions;
 }
 
-$preparedResponseJSON = json_encode($preparedResponse, JSON_FORCE_OBJECT);
+$preparedResponseJSON = json_encode($preparedResponse);
 
 echo $preparedResponseJSON;
 ?>
