@@ -13,7 +13,8 @@ if (isset($_REQUEST['q'])) {
   $preparedResponse["query"] = $query;
 
   $keywords = explode(" ", $query); // Split phrase queries into single ones
-  $quintuples = array(); // Stores the 5 suggestions for each query term
+  $n = count($keywords);            // The number of keywords
+  $quintuples = array();            // Stores the 5 suggestions for each query term
 
   // For each single word in the query
   for($i = 0; $i < count($keywords); $i++) {
@@ -45,23 +46,43 @@ if (isset($_REQUEST['q'])) {
   }
   
   // Create the response format
-  $suggestions = [];
-  for($i = 0; $i < $limit; $i++) {
-    $suggestion = "";
+  $suggestions = [];  
 
-    for($j = 0; $j < count($quintuples); $j++) {
-      $suggestion = $suggestion.$quintuples[$j][$i];
+  // Alternate method, interleave best suggestions
+  if($n > 3 || $n <= 1) {
+    
+    // Combine i'th suggestion for each keyword
+    for($i = 0; $i < $limit; $i++) {
+      $suggestion = "";
 
-      if($j < count($quintuples)-1) {
-        $suggestion = $suggestion." ";
+      for($j = 0; $j < count($quintuples); $j++) {
+        $suggestion = $suggestion.$quintuples[$j][$i];
+
+        if($j < count($quintuples)-1) {
+          $suggestion = $suggestion." ";
+        }
       }
-    }
-    // echo($suggestion . "<br>");
+      // echo($suggestion . "<br>");
 
-    $suggestions[] = $suggestion;
+      $suggestions[] = $suggestion;
+    }
+  } else if($n == 3) {
+    $suggestions[] = $quintuples[0][0]." ".$quintuples[1][0]." ".$quintuples[2][0];
+    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][0]." ".$quintuples[2][0];
+    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][1]." ".$quintuples[2][0];
+    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][0]." ".$quintuples[2][1];
+    $suggestions[] = $quintuples[0][2]." ".$quintuples[1][1]." ".$quintuples[2][1];
+  } 
+  else if ($n == 2) {
+    $suggestions[] = $quintuples[0][0]." ".$quintuples[1][0];
+    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][0];
+    $suggestions[] = $quintuples[0][0]." ".$quintuples[1][1];
+    $suggestions[] = $quintuples[0][1]." ".$quintuples[1][1];
+    $suggestions[] = $quintuples[0][2]." ".$quintuples[1][0];
   }
+
   // var_dump($suggestions);
-  // var_dump($response);
+  // var_dump($preparedResponse);
 
   $preparedResponse["suggestions"] = $suggestions;
 }
