@@ -3,6 +3,11 @@
 // make sure browsers see this page as JSON
 header('Content-Type: application/json');
 
+// Spell corrector
+ini_set("memory_limit", -1);
+set_time_limit(0);
+include "SpellCorrector.php";
+
 $preparedResponse = array();
 
 if (isset($_REQUEST['q'])) {
@@ -48,7 +53,7 @@ if (isset($_REQUEST['q'])) {
   // Create the response format
   $suggestions = [];  
 
-  // Alternate method, interleave best suggestions
+  // Add autocomplete suggestions: alternate method, interleave best suggestions
   if($n > 3 || $n <= 1) {
     
     // Combine i'th suggestion for each keyword
@@ -79,6 +84,21 @@ if (isset($_REQUEST['q'])) {
     $suggestions[] = $quintuples[0][0]." ".$quintuples[1][1];
     $suggestions[] = $quintuples[0][1]." ".$quintuples[1][1];
     $suggestions[] = $quintuples[0][2]." ".$quintuples[1][0];
+  }
+
+  // Add output of spelling checker
+  $spellsuggestion = "";
+  for($i = 0; $i < $n; $i++) {
+    $spellsuggestion = $spellsuggestion.SpellCorrector::correct($keywords[$i]);
+
+    if($i < ($n-1)) {
+      $spellsuggestion = $spellsuggestion." ";
+    }
+  }
+
+  // Check if the first suggestion is already the same
+  if($suggestions[0] != $spellsuggestion) {
+    array_unshift($suggestions, $spellsuggestion);
   }
 
   // var_dump($suggestions);
