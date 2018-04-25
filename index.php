@@ -77,7 +77,7 @@ if ($query)
 ?> 
 <html> 
 <head> 
-  <title>Solr Search PHP+</title> 
+  <title>Solr Search</title> 
 
   <!-- Favicon -->
   <link rel="icon" href="favicon.ico" type="image/ico">
@@ -89,8 +89,8 @@ if ($query)
   <script src="lib/jquery-3.3.1.min.js"></script>
 
   <!-- devBridge jQuery-Autocomplete -->
-  <script src="lib/jquery.auto-complete.min.js"></script>
-  <link rel="stylesheet" href="lib/jquery.auto-complete.css">
+  <script src="lib/jquery.autocomplete.min.js"></script>
+  <link rel="stylesheet" href="lib/jquery.autocomplete.css">
 
   <!-- Additional styles -->
   <link href="https://fonts.googleapis.com/css?family=Roboto|Capriola" rel="stylesheet">
